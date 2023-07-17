@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_challenge/location_row_item.dart';
 import 'package:provider/provider.dart';
 import 'app_state_model.dart';
+import 'location_add_dialog.dart';
 
 // ignore: constant_identifier_names
 const APIKEY = 'YOUR-API-KEY-GOES-HERE';
@@ -38,7 +39,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AppStateModel>(context);
-    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -60,58 +60,11 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          var cityController = TextEditingController();
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        right: -40.0,
-                        top: -40.0,
-                        child: InkResponse(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const CircleAvatar(
-                            backgroundColor: Colors.red,
-                            child: Icon(Icons.close),
-                          ),
-                        ),
-                      ),
-                      Form(
-                        key: formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                controller: cityController,
-                                decoration: const InputDecoration(
-                                  labelText: 'City',
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: MaterialButton(
-                                child: const Text("Add City"),
-                                onPressed: () {
-                                  model.addLocation(cityController.text);
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              });
-        },
+        onPressed: () => showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return LocationAddRow();
+            }),
         tooltip: 'Add a city',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

@@ -4,5 +4,6 @@ Most of the rest are auto populated by flutter and are rarely touched unless spe
 
 ## Layout
 |- app_state_model.dart - the main application state data structure shared by all screens
+|- location_add_dialog.dart - the dialog to add a new location
 |- location_row_item.dart - the widget that paints an individual location row
 |- main.dart - the entry point to run the app
