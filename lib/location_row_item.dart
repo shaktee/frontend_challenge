@@ -25,7 +25,7 @@ class LocationRowItem extends StatelessWidget {
           print(weatherData.hasError);
           print(weatherData.error);
           return Container(
-              height: 50,
+              height: 60,
               color: index & 1 == 0 ? Colors.amber[600] : Colors.grey,
               child: ListTile(
                   autofocus: true,

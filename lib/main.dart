@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import 'app_state_model.dart';
 
 // ignore: constant_identifier_names
-const APIKEY = 'ae1afbd53a3d39c6013101c054a7cd22';
+const APIKEY = 'YOUR-API-KEY-GOES-HERE';
 void main() {
   runApp(ChangeNotifierProvider<AppStateModel>(
-      create: (_) => AppStateModel(apiKey: APIKEY)..locations,
+      create: (_) => AppStateModel(apiKey: APIKEY)..loadAppState(),
       child: const MyApp()));
 }
 

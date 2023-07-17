@@ -20,6 +20,13 @@ class AppStateModel extends foundation.ChangeNotifier {
 
   List<String> get locations => _locations;
   void addLocation(String location) {
+    // Check if the a duplicate exists
+    // before adding
+    for (var idx = 0; idx < _locations.length; idx++) {
+      if (_locations[idx].toLowerCase() == location.toLowerCase()) {
+        return;
+      }
+    }
     _locations.add(location);
     try {
       writeAppState();
@@ -29,7 +36,7 @@ class AppStateModel extends foundation.ChangeNotifier {
   }
 
   // Local database (mobile apps only)
-  final String locationsFile = 'locations.txt';
+  final String locationsFile = 'locations.json';
 
   Future<String> getAppDir() async {
     return (await getApplicationDocumentsDirectory()).path;
@@ -37,22 +44,29 @@ class AppStateModel extends foundation.ChangeNotifier {
 
   late final appDir = getAppDir();
 
+  // Write back the state to the local file system in non-web targets
   writeAppState() {
-    var file = File('$appDir/$locationsFile');
-    file.writeAsStringSync(json.encode(_locations));
+    appDir.then((value) {
+      var file = File('$value/$locationsFile');
+      print('$value/$locationsFile');
+      file.writeAsStringSync(json.encode(_locations));
+    });
   }
 
   loadAppState() {
-    var file = File('$appDir/$locationsFile');
-    if (file.existsSync()) {
-      var jsonData = json.decode(file.readAsStringSync());
-      for (var index = 0; index < jsonData.length; index++) {
-        var location = jsonData[index];
-        if (!_locations.contains(location)) {
-          addLocation(location);
+    appDir.then((value) {
+      var file = File('$value/$locationsFile');
+      print('$value/$locationsFile');
+      if (file.existsSync()) {
+        var jsonData = json.decode(file.readAsStringSync());
+        for (var index = 0; index < jsonData.length; index++) {
+          var location = jsonData[index];
+          if (!_locations.contains(location)) {
+            addLocation(location);
+          }
         }
       }
-    }
+    });
   }
 
   // Weather data api

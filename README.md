@@ -4,7 +4,7 @@ frontend coding challenge
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+The main implementation resides under `lib/`. See [lib/README.md](lib/README.md) for details.
 
 ## Running the app
 Once you install `flutter`, at the top of this directory, type
