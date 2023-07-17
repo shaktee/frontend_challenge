@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/foundation.dart';
 import 'package:universal_io/io.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
 
 enum Unit { IMPERIAL, METRIC }
 
@@ -73,7 +74,20 @@ class AppStateModel extends foundation.ChangeNotifier {
       final jsonData = json.decode(data);
       stringData += "${jsonData['weather'][0]['main']} ";
       stringData += "${jsonData['main']['temp']}${tempString()} ";
-      stringData += "Humidity ${jsonData['main']['humidity']}%";
+
+      DateTime sr = DateTime.fromMillisecondsSinceEpoch(
+          (jsonData['sys']['sunrise'] + jsonData['timezone']) * 1000,
+          isUtc: true);
+      String sunrise = DateFormat('kk:mm').format(sr);
+      stringData += "Sunrise $sunrise ";
+
+      DateTime ss = DateTime.fromMillisecondsSinceEpoch(
+          (jsonData['sys']['sunset'] + jsonData['timezone']) * 1000,
+          isUtc: true);
+      String sunset = DateFormat('kk:mm').format(ss);
+      stringData += "Sunrise $sunset ";
+
+      stringData += "Humidity ${jsonData['main']['humidity']}% ";
       stringData += "Wind ${jsonData['wind']['speed']}${speedString()} ";
     } finally {
       client.close();

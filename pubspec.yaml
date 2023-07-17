@@ -40,6 +40,7 @@ dependencies:
   change_notifier: ^0.24.0
   universal_io: ^2.2.2
   path_provider: ^2.0.15
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
